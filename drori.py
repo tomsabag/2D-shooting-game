@@ -2,10 +2,11 @@ import pygame
 import random
 import time
 pygame.init()
-# //////////////////////////////////////FUTURE TO DO LIST //////////////////////////////////////////
-#let childs shoot bullets too at drori, at random pace, reducing hp as well,
-#make levels - different music, childs harder to kill, change background image and music
-#make missions = in a certain time - kill a certain amount
+
+# TODO: let childs shoot bullets too at drori, at random pace, reducing hp as well,
+# TODO: make levels - different music, childs harder to kill, change background image and music
+# TODO: make missions = in a certain time - kill a certain amount
+
 # ////////////////////////////////////// game settings /////////////////////////////////////////////
 run = True
 screen = pygame.display.set_mode((640, 480))
@@ -89,7 +90,7 @@ def adjust_hp(hp_amount):
     escaped_counter = 0
     drori_is_hit_counter = 0
     score_counter = 0
-    print(score_counter)
+    #print(score_counter)
     return max(0, min(hp_amount, 100))
 
 hp_printed_text = font2.render(str(adjust_hp(hp_amount)) + '/100', True, black, None)
