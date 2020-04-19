@@ -2,26 +2,29 @@ import pygame
 import random
 import time
 pygame.init()
-# //////////////////////////////////////FUTURE TO DO LIST //////////////////////////////////////////
-#let childs shoot bullets too at drori, at random pace, reducing hp as well,
-#make levels - different music, childs harder to kill, change background image and music
-#make missions = in a certain time - kill a certain amount
+
+# TODO: let childs shoot bullets too at drori, at random pace, reducing hp as well,
+# TODO: make levels - different music, childs harder to kill, change background image and music
+# TODO: make missions = in a certain time - kill a certain amount
+
 # ////////////////////////////////////// game settings /////////////////////////////////////////////
 run = True
 screen = pygame.display.set_mode((640, 480))
-background_image = pygame.image.load('bg.jpg')
+background_image = pygame.image.load('resources/images/general/bg.jpg')
 clock = pygame.time.Clock()
+
 # /////////////////////////////////////// music settings ////////////////////////////////////////////
 pygame.display.set_caption("drr mbdd")
-shot = pygame.mixer.Sound('shot.wav')
-chains = pygame.mixer.Sound('chains.wav')
-burp = pygame.mixer.Sound('burp.wav')
-laugh = pygame.mixer.Sound('laugh.wav')
-bite = pygame.mixer.Sound('bite.wav')
-pygame.mixer_music.load('bg_music.wav')
-enemy_shot = pygame.mixer.Sound('enemy_shot.wav')
-hit_sound = pygame.mixer.Sound('hit_sound.wav')
+shot = pygame.mixer.Sound('resources/audio/shot.wav')
+chains = pygame.mixer.Sound('resources/audio/chains.wav')
+burp = pygame.mixer.Sound('resources/audio/burp.wav')
+laugh = pygame.mixer.Sound('resources/audio/laugh.wav')
+bite = pygame.mixer.Sound('resources/audio/bite.wav')
+pygame.mixer_music.load('resources/audio/bg_music.wav')
+enemy_shot = pygame.mixer.Sound('resources/audio/enemy_shot.wav')
+hit_sound = pygame.mixer.Sound('resources/audio/hit_sound.wav')
 pygame.mixer_music.play(-1)
+
 # /////////////////////////////////////////////// color settings /////////////////////////////////////////
 blue = (30, 144, 255)
 green = (50, 205, 50)
@@ -38,29 +41,31 @@ score_counter = 0
 displayed_score_counter = 0
 escaped_counter = 0
 display_counter = font.render(": " + str(displayed_score_counter), True, black, None)
-score = pygame.image.load('score.png')
+score = pygame.image.load('resources/images/general/score.png')
+
 # ///////////////////////////////////////////////// shoes ////////////////////////////////////////////////////
-shoes_list = [pygame.image.load('shoes/0.gif'), pygame.image.load('shoes/1.gif'), pygame.image.load('shoes/2.gif'),
-              pygame.image.load('shoes/3.gif'), pygame.image.load('shoes/4.gif'), pygame.image.load('shoes/5.gif'),
-              pygame.image.load('shoes/6.gif'), pygame.image.load('shoes/7.gif'), pygame.image.load('shoes/8.gif'),
-              pygame.image.load('shoes/9.gif'), pygame.image.load('shoes/10.gif'), pygame.image.load('shoes/11.gif'),
-              pygame.image.load('shoes/12.gif'), pygame.image.load('shoes/13.gif'), pygame.image.load('shoes/14.gif'),
-              pygame.image.load('shoes/15.gif'), pygame.image.load('shoes/16.gif'), pygame.image.load('shoes/17.gif'),
-              pygame.image.load('shoes/18.gif'), pygame.image.load('shoes/19.gif'), pygame.image.load('shoes/20.gif'),
-              pygame.image.load('shoes/21.gif'), pygame.image.load('shoes/22.gif'), pygame.image.load('shoes/23.gif'),
-              pygame.image.load('shoes/24.gif'), pygame.image.load('shoes/25.gif'), pygame.image.load('shoes/26.gif'),
-              pygame.image.load('shoes/27.gif'), pygame.image.load('shoes/28.gif'), pygame.image.load('shoes/29.gif'),
-              pygame.image.load('shoes/30.gif'), pygame.image.load('shoes/31.gif'), pygame.image.load('shoes/32.gif'),
-              pygame.image.load('shoes/33.gif'), pygame.image.load('shoes/34.gif'), pygame.image.load('shoes/35.gif'),
-              pygame.image.load('shoes/36.gif'), pygame.image.load('shoes/37.gif'), pygame.image.load('shoes/38.gif'),
-              pygame.image.load('shoes/39.gif'), pygame.image.load('shoes/40.gif'), pygame.image.load('shoes/41.gif'),
-              pygame.image.load('shoes/42.gif'), pygame.image.load('shoes/43.gif'), pygame.image.load('shoes/44.gif'),
-              pygame.image.load('shoes/45.gif'), pygame.image.load('shoes/46.gif'), pygame.image.load('shoes/47.gif'),
-              pygame.image.load('shoes/48.gif'), pygame.image.load('shoes/49.gif'), pygame.image.load('shoes/50.gif'),
-              pygame.image.load('shoes/51.gif'), pygame.image.load('shoes/52.gif'), pygame.image.load('shoes/53.gif'),
-              pygame.image.load('shoes/54.gif'), pygame.image.load('shoes/55.gif'), pygame.image.load('shoes/56.gif'),
-              pygame.image.load('shoes/57.gif'), pygame.image.load('shoes/58.gif'), pygame.image.load('shoes/59.gif')]
+shoes_list = [pygame.image.load('resources/images/shoes/0.gif'), pygame.image.load('resources/images/shoes/1.gif'), pygame.image.load('resources/images/shoes/2.gif'),
+              pygame.image.load('resources/images/shoes/3.gif'), pygame.image.load('resources/images/shoes/4.gif'), pygame.image.load('resources/images/shoes/5.gif'),
+              pygame.image.load('resources/images/shoes/6.gif'), pygame.image.load('resources/images/shoes/7.gif'), pygame.image.load('resources/images/shoes/8.gif'),
+              pygame.image.load('resources/images/shoes/9.gif'), pygame.image.load('resources/images/shoes/10.gif'), pygame.image.load('resources/images/shoes/11.gif'),
+              pygame.image.load('resources/images/shoes/12.gif'), pygame.image.load('resources/images/shoes/13.gif'), pygame.image.load('resources/images/shoes/14.gif'),
+              pygame.image.load('resources/images/shoes/15.gif'), pygame.image.load('resources/images/shoes/16.gif'), pygame.image.load('resources/images/shoes/17.gif'),
+              pygame.image.load('resources/images/shoes/18.gif'), pygame.image.load('resources/images/shoes/19.gif'), pygame.image.load('resources/images/shoes/20.gif'),
+              pygame.image.load('resources/images/shoes/21.gif'), pygame.image.load('resources/images/shoes/22.gif'), pygame.image.load('resources/images/shoes/23.gif'),
+              pygame.image.load('resources/images/shoes/24.gif'), pygame.image.load('resources/images/shoes/25.gif'), pygame.image.load('resources/images/shoes/26.gif'),
+              pygame.image.load('resources/images/shoes/27.gif'), pygame.image.load('resources/images/shoes/28.gif'), pygame.image.load('resources/images/shoes/29.gif'),
+              pygame.image.load('resources/images/shoes/30.gif'), pygame.image.load('resources/images/shoes/31.gif'), pygame.image.load('resources/images/shoes/32.gif'),
+              pygame.image.load('resources/images/shoes/33.gif'), pygame.image.load('resources/images/shoes/34.gif'), pygame.image.load('resources/images/shoes/35.gif'),
+              pygame.image.load('resources/images/shoes/36.gif'), pygame.image.load('resources/images/shoes/37.gif'), pygame.image.load('resources/images/shoes/38.gif'),
+              pygame.image.load('resources/images/shoes/39.gif'), pygame.image.load('resources/images/shoes/40.gif'), pygame.image.load('resources/images/shoes/41.gif'),
+              pygame.image.load('resources/images/shoes/42.gif'), pygame.image.load('resources/images/shoes/43.gif'), pygame.image.load('resources/images/shoes/44.gif'),
+              pygame.image.load('resources/images/shoes/45.gif'), pygame.image.load('resources/images/shoes/46.gif'), pygame.image.load('resources/images/shoes/47.gif'),
+              pygame.image.load('resources/images/shoes/48.gif'), pygame.image.load('resources/images/shoes/49.gif'), pygame.image.load('resources/images/shoes/50.gif'),
+              pygame.image.load('resources/images/shoes/51.gif'), pygame.image.load('resources/images/shoes/52.gif'), pygame.image.load('resources/images/shoes/53.gif'),
+              pygame.image.load('resources/images/shoes/54.gif'), pygame.image.load('resources/images/shoes/55.gif'), pygame.image.load('resources/images/shoes/56.gif'),
+              pygame.image.load('resources/images/shoes/57.gif'), pygame.image.load('resources/images/shoes/58.gif'), pygame.image.load('resources/images/shoes/59.gif')]
 shoes_counter = 0
+
 # ///////////////////////////////////////////////// variables assignments ////////////////////////////////////
 bullets = []
 spawn_list = []
@@ -70,7 +75,6 @@ t0_hit_image = 0
 enemy_bullets = []
 drori_is_hit_counter = 0
 mp_amount = 100
-
 
 # ////////////////////////////////////////////// fix and set hp mp//////////////////////////////////////////////////////
 def adjust_hp(hp_amount):
@@ -86,12 +90,12 @@ def adjust_hp(hp_amount):
     escaped_counter = 0
     drori_is_hit_counter = 0
     score_counter = 0
-    print(score_counter)
+    #print(score_counter)
     return max(0, min(hp_amount, 100))
-
 
 hp_printed_text = font2.render(str(adjust_hp(hp_amount)) + '/100', True, black, None)
 mp_printed_text = font2.render(str(100 - len(bullets)), True, black, None)
+
 # ////////////////////////////////////////////////////// Drori class ///////////////////////////////////////////////////
 class Drori(object):
     def __init__(self, start_x=50, start_y=215, width=50, height=50):
@@ -104,7 +108,7 @@ class Drori(object):
         self.jump_count = 10
         self.left = False
         self.right = True
-        self.image = pygame.image.load('drori.png')
+        self.image = pygame.image.load('resources/images/drori/drori.png')
         self.hitbox = (self.start_x - 2, self.start_y, self.width + 5, self.height + 13)
 
     def draw(self):
@@ -119,13 +123,13 @@ class Drori(object):
             self.left = True
             self.right = False
             self.start_x -= self.vel
-            self.image = pygame.image.load('drori.png')
+            self.image = pygame.image.load('resources/images/drori/drori.png')
 
         if keys[pygame.K_RIGHT] and self.start_x < 640 - self.width:
             self.right = True
             self.left = False
             self.start_x += self.vel
-            self.image = pygame.image.load('drori.png')
+            self.image = pygame.image.load('resources/images/drori/drori.png')
 
         if not self.jump:
             if keys[pygame.K_UP] and self.start_y > 0:
@@ -145,9 +149,7 @@ class Drori(object):
                 self.jump = False
                 self.jump_count = 10
 
-
 class Spawn(object):
-
     def __init__(self, x, y, image, image2, vel, die_sound, bullet, t_created, shoot_interval):
         self.image = pygame.image.load(image)
         self.image2 = pygame.image.load(image2)
@@ -180,7 +182,6 @@ class Spawn(object):
         global score_counter
         score_counter += 1
         displayed_score_counter += 1
-
         global display_counter
         display_counter = font.render(str(displayed_score_counter), True, black, None)
 
@@ -194,7 +195,6 @@ class Spawn(object):
     def spawn(self):
         pass
 
-
     '''def collision(self):
         for bullet in bullets:
             if bullet.within_hitbox() is True:
@@ -204,7 +204,6 @@ class Spawn(object):
 
 
 class Projectile(object):
-
     def __init__(self, x, y, image, direction):
         self.x = x
         self.y = y
@@ -252,10 +251,9 @@ class Projectile(object):
                 drori_is_hit_counter += 1
     '''def decide_bullet(self):
         if bullet.child_in_range() is False:
-            return 'defaultbullet.png'
+            return 'resources/images/general/defaultbullet.png'
         else:
             return self.bullet'''
-
 
 def redraw_game():
     global hp_amount
@@ -283,14 +281,16 @@ def redraw_game():
 
 
 dror_char = Drori()
-maor = Spawn(590, 300, 'maor.png', 'maor2.png', 5, laugh, 'asian.png', time.perf_counter(), random.randint(2, 7))
-ido = Spawn(590, 300, 'ido.png', 'ido2.png', 5, burp, 'shnitzel.png', time.perf_counter(), random.randint(2, 7))
-tom = Spawn(590, 300, 'tom.png', 'tom2.png', 5, chains, 'chains.png', time.perf_counter(), random.randint(2, 7))
-bar = Spawn(590, 300, 'bar.png', 'bar2.png', 5, bite, 'penisr.png', time.perf_counter(), random.randint(2, 7)) ############### fix bar2 and bullet
+maor = Spawn(590, 300, 'resources/images/maor/maor.png', 'resources/images/maor/maor2.png', 5, laugh, 'resources/images/maor/asian.png', time.perf_counter(), random.randint(2, 7))
+ido = Spawn(590, 300, 'resources/images/ido/ido.png', 'resources/images/ido/ido2.png', 5, burp, 'resources/images/ido/shnitzel.png', time.perf_counter(), random.randint(2, 7))
+tom = Spawn(590, 300, 'resources/images/tomas/tom.png', 'resources/images/tomas/tom2.png', 5, chains, 'resources/images/tomas/chains.png', time.perf_counter(), random.randint(2, 7))
+bar = Spawn(590, 300, 'resources/images/bar/bar.png', 'resources/images/bar/bar2.png', 5, bite, 'resources/images/bar/penisr.png', time.perf_counter(), random.randint(2, 7)) ############### fix bar2 and bullet
 
-ammo_list = ['asian.png', 'shnitzel.png', 'chains.png']
-childs_list = [[maor, 'asian.png', laugh, 'maor.png', 'maor2.png'], [ido, 'shnitzel.png', burp, 'ido.png', 'ido2.png'],
-               [tom, 'chains.png', chains, 'tom.png', 'tom2.png'], [bar, 'penisr.png', bite, 'bar.png', 'bar2.png']]
+ammo_list = ['resources/images/maor/asian.png', 'resources/images/ido/shnitzel.png', 'resources/images/tomas/chains.png']
+childs_list = [[maor, 'resources/images/maor/asian.png', laugh, 'resources/images/maor/maor.png', 'resources/images/maor/maor2.png'],
+			   [ido, 'resources/images/ido/shnitzel.png', burp, 'resources/images/ido/ido.png', 'resources/images/ido/ido2.png'],
+               [tom, 'resources/images/tomas/chains.png', chains, 'resources/images/tomas/tom.png', 'resources/images/tomas/tom2.png'],
+			   [bar, 'resources/images/bar/penisr.png', bite, 'resources/images/bar/bar.png', 'resources/images/bar/bar2.png']]
 spawn_time_random = random.randint(2, 5)
 
 while run:
@@ -327,7 +327,7 @@ while run:
     for child in spawn_list:
         if enemy_time_counter > child.shoot_interval:
             enemy_shot.play()
-            enemy_bullets.append(Projectile(child.x - 30, child.y - 10, 'enemy_bullet.png', -1))
+            enemy_bullets.append(Projectile(child.x - 30, child.y - 10, 'resources/images/general/enemy_bullet.png', -1))
             child.shoot_interval += random.randint(2, 8)
         #print(child.shoot_interval)
         #child.collision()
@@ -344,21 +344,20 @@ while run:
 
 
     # ///////////////////////////////////////// time check /////////////////////////////////////////////////////////////
-
     if time.perf_counter() - t_0 > 0.5:
-        dror_char.image = pygame.image.load('drori.png')
+        dror_char.image = pygame.image.load('resources/images/drori/drori.png')
 
     if keys[pygame.K_LCTRL] and len(bullets) < 5:
         shot.play()
         t_0 = time.perf_counter()
-        dror_char.image = pygame.image.load('drori2.png')
+        dror_char.image = pygame.image.load('resources/images/drori/drori2.png')
 
         if dror_char.left is True:
             direction = -1
         else:
             direction = 1
 
-        bullet_image = 'defaultbullet.png'
+        bullet_image = 'resources/images/general/defaultbullet.png'
         for child in spawn_list:
             if dror_char.start_y + dror_char.height > child.hit_box[1] and\
                     dror_char.start_y < child.hit_box[1] + child.hit_box[2]:
