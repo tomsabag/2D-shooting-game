@@ -10,9 +10,8 @@ from Corona_Proj import Corona_Proj
 from Lose import Lose
 import player
 pygame.init()
-# //////////////////////////////////////FUTURE TO DO LIST //////////////////////////////////////////
-
 # ////////////////////////////////////// game settings /////////////////////////////////////////////
+
 run = True
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
@@ -79,7 +78,8 @@ score = pygame.image.load('images/others/score.png')
 
 mp_printed_text = font2.render(str(100 - len(bullets)), True, black, None)
 
-def redraw_game(dror_char, mp_printed_text, play_game, spawn_list, bullets, lose, coins, coin_image):
+
+def redraw_game(dror_char, bullets, coin_image):
     coins_text = font.render(str(coins_counter), True, black, None)
     screen.blit(bg_list[bg_index % 4], (0, 0))
     screen.blit(coin_image, (440, 15))
@@ -87,11 +87,11 @@ def redraw_game(dror_char, mp_printed_text, play_game, spawn_list, bullets, lose
     screen.blit(hp_text, (20, 20))
     screen.blit(display_counter, (400, 25))
     pygame.draw.rect(screen, blue, (215, 20, 100 - 20 * len(bullets), 20), 0)
-    #sneeze
+    # sneeze
     if coins_counter >= 3:
         screen.blit(sneeze_image, (501, 5))
     pygame.draw.rect(screen, green, (60, 20, dror_char.hp, 20), 0)
-    hp_printed_text = font2.render(str(dror_char.adjust_hp(score_counter)) + '/100', True, black, None)
+    hp_printed_text = font2.render(str(dror_char.adjust_hp()) + '/100', True, black, None)
     mp_printed_text = font2.render(str(100 - len(bullets) * 20) + '/100', True, black, None)
     screen.blit(mp_printed_text, (245 - len(bullets) * 5, 24))
     screen.blit(hp_printed_text, (max(60, dror_char.hp), 24))
@@ -101,15 +101,21 @@ def redraw_game(dror_char, mp_printed_text, play_game, spawn_list, bullets, lose
     pygame.display.update()
 
 
-dror_char = player.Drori(score_counter)
-maor = Spawn(590, 300, 'images/faces/maor.png', 'images/faces/maor2.png', 5, konichiwa, 'images/bullets/asian.png', time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
-ido = Spawn(590, 300, 'images/faces/ido.png', 'images/faces/ido2.png', 5, ploo, 'images/bullets/shnitzel.png', time.perf_counter(), random.randint(2, 7),  t_spawn_created_list, displayed_score_counter)
-tom = Spawn(590, 300, 'images/faces/tom.png', 'images/faces/tom2.png', 5, bruh, 'images/bullets/chains.png', time.perf_counter(), random.randint(2, 7),  t_spawn_created_list, displayed_score_counter)
-bar = Spawn(590, 300, 'images/faces/bar.png', 'images/faces/bar2.png', 5, brk, 'images/bullets/penisr.png', time.perf_counter(), random.randint(2, 7),  t_spawn_created_list, displayed_score_counter)
+dror_char = player.Player()
+maor = Spawn(590, 300, 'images/faces/maor.png', 'images/faces/maor2.png', 5, konichiwa, 'images/bullets/asian.png',
+             time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+ido = Spawn(590, 300, 'images/faces/ido.png', 'images/faces/ido2.png', 5, ploo, 'images/bullets/shnitzel.png',
+            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+tom = Spawn(590, 300, 'images/faces/tom.png', 'images/faces/tom2.png', 5, bruh, 'images/bullets/chains.png',
+            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+bar = Spawn(590, 300, 'images/faces/bar.png', 'images/faces/bar2.png', 5, brk, 'images/bullets/penisr.png',
+            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
 t_spawn_created_list = []
 ammo_list = ['asian.png', 'shnitzel.png', 'chains.png']
-childs_list = [[maor, 'images/bullets/asian.png', konichiwa, 'images/faces/maor.png', 'images/faces/maor2.png'], [ido, 'images/bullets/shnitzel.png', ploo, 'images/faces/ido.png', 'images/faces/ido2.png'],
-               [tom, 'images/bullets/chains.png', bruh, 'images/faces/tom.png', 'images/faces/tom2.png'], [bar, 'images/bullets/penisr.png', brk, 'images/faces/bar.png', 'images/faces/bar2.png']]
+childs_list = [[maor, 'images/bullets/asian.png', konichiwa, 'images/faces/maor.png', 'images/faces/maor2.png'],
+               [ido, 'images/bullets/shnitzel.png', ploo, 'images/faces/ido.png', 'images/faces/ido2.png'],
+               [tom, 'images/bullets/chains.png', bruh, 'images/faces/tom.png', 'images/faces/tom2.png'],
+               [bar, 'images/bullets/penisr.png', brk, 'images/faces/bar.png', 'images/faces/bar2.png']]
 spawn_time_random = random.randint(2, 5)
 play_button = Button(535, 0, 'images/others/play_button.png')
 lose_button = Lose()
@@ -131,11 +137,10 @@ while run:
         mouse_click = pygame.mouse.get_pressed()
         if event.type == pygame.QUIT:
             run = False
-    redraw_game(dror_char, mp_printed_text,
-                play_game, spawn_list, bullets, lose, coins, coin_image)
+    redraw_game(dror_char, bullets, coin_image)
 
     keys = pygame.key.get_pressed()
-    dror_char.move(keys, coins_counter, spawn_list, score_counter)
+    dror_char.move(keys)
     # ///////////////////////////////////////// play button ///////////////////////////////////////////////////////
     play_button.draw(screen)
     if play_button.click(play_game, mouse_click, mouse_pos):
@@ -166,7 +171,7 @@ while run:
         play_lvl_up += 3
         t_lvl_up = time.perf_counter()
 
-    if displayed_score_counter % 3 == 0 and displayed_score_counter != 0 and\
+    if displayed_score_counter % 3 == 0 and displayed_score_counter != 0 and \
             play_game is True and game_time - t_lvl_up < 1:
         screen.blit(pygame.image.load('images/others/lvl_up_text.png'), (200, 100))
     # //////////////////////////////////////////// coins   //////////////////////////////////////////////////
@@ -182,8 +187,8 @@ while run:
     # /////////////////////////////////////// summoning childs //////////////////////////////////////////////////
     if play_game is True and lose_button.lose is False:
         if spawn_counter > spawn_time_random:
-            spawn_time_random += random.randint(max(1, 2 - displayed_score_counter//30),
-                                                max(2, 5 - displayed_score_counter//10))
+            spawn_time_random += random.randint(max(1, 2 - displayed_score_counter // 30),
+                                                max(2, 5 - displayed_score_counter // 10))
             random_child_n = random.randint(0, 2)
             random_y = random.randint(50, 300)
             spawn_list.append(Spawn(590, random_y, childs_list[random_child_n][3],
@@ -213,8 +218,8 @@ while run:
             enemy_shot.play()
             enemy_bullets.append(Projectile(child.x - 30, child.y - 10, 'images/bullets/enemy_bullet.png', -1, bullets))
             child.shoot_interval += random.randint(2, 8)
-        #print(child.shoot_interval)
-        #child.collision()
+        # print(child.shoot_interval)
+        # child.collision()
         if child.x < 0:
             dror_char.hp = max(0, dror_char.hp - 10)
             spawn_list.pop(spawn_list.index(child))
@@ -224,22 +229,19 @@ while run:
         else:
             spawn_list.pop(spawn_list.index(child))
 
-
-
     # ///////////////////////////////////////// time check /////////////////////////////////////////////////////////////
 
     if time.perf_counter() - t_0 > 0.5:
-        dror_char.image = pygame.image.load('images/faces/drori.png')
+        dror_char.image = pygame.image.load('images/faces/drori_right.png')
         is_shooting = False
     if keys[pygame.K_LCTRL] and len(bullets) < 5:
         is_shooting = True
         shot.play()
         t_0 = time.perf_counter()
         if dror_char.right is True:
-            dror_char.image = pygame.image.load('images/faces/drori2.png')
+            dror_char.image = pygame.image.load('images/faces/drori_shoot_right.png')
         elif dror_char.left is True:
-            dror_char.image = pygame.image.load('images/faces/drori2l.png')
-
+            dror_char.image = pygame.image.load('images/faces/drori_shoot_left.png')
 
         if dror_char.left is True:
             direction = -1
@@ -250,7 +252,7 @@ while run:
             bullet_image = 'images/bullets/defaultbullet.png'
 
         for child in spawn_list:
-            if dror_char.start_y + dror_char.height > child.hit_box[1] and\
+            if dror_char.start_y + dror_char.height > child.hit_box[1] and \
                     dror_char.start_y < child.hit_box[1] + child.hit_box[2]:
                 bullet_image = child.bullet
 
@@ -270,7 +272,8 @@ while run:
     if keys[pygame.K_a] and cor_pro_shooting_right_now is False and coins_counter >= 3:
         coins_counter -= 3
         sneeze_sound.play()
-        cor_pro = Corona_Proj(dror_char.start_x + 10, dror_char.start_y + dror_char.height // 2, dror_char.right, time.perf_counter())
+        cor_pro = Corona_Proj(dror_char.start_x + 10, dror_char.start_y + dror_char.height // 2, dror_char.right,
+                              time.perf_counter())
         cor_pro_shooting_right_now = True
 
     if cor_pro_shooting_right_now is True:
@@ -288,4 +291,3 @@ while run:
 
     pygame.display.update()
 pygame.quit()
-

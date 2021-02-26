@@ -9,7 +9,7 @@ class Button(object):
         self.add_time = True
         self.play_counter = 0
         self.time_list = []
-        self.gong = gong = pygame.mixer.Sound('sounds/gong.wav')
+        self.gong = pygame.mixer.Sound('sounds/gong.wav')
 
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))

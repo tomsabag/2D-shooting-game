@@ -5,7 +5,7 @@ score_counter = 0
 displayed_score_counter = 0
 class Spawn(object):
     def __init__(self, x, y, image, image2, vel, die_sound, bullet, t_created, shoot_interval, t_spawn_created_list, displayed_score_counter):
-        self.shoes_list = shoes_list = [pygame.image.load(f"shoes/{i}.gif") for i in range(60)]
+        self.shoes_list = [pygame.image.load(f"shoes/{i}.gif") for i in range(60)]
         self.shoes_counter = 0
         self.image = pygame.image.load(image)
         self.image2 = pygame.image.load(image2)
@@ -42,8 +42,7 @@ class Spawn(object):
 
         #score_counter += 1
         #displayed_score_counter += 1
-        font = pygame.font.SysFont(None, 30)
-        black = (0, 0, 0)
+        pygame.font.SysFont(None, 30)
 
     def destroyed_animation(self, game_time):
         if (game_time - self.kill_time) > 0.05:
@@ -60,4 +59,3 @@ class Spawn(object):
         else:
             self.jump = False
             self.jump_count = 10
-
