@@ -1,6 +1,15 @@
 import pygame
 
 
+def bullet_listener(bullet, spawn_list, dror_char, t_spawn_created_list, bullets):
+    if bullet.within_hitbox(spawn_list, dror_char, t_spawn_created_list):
+        bullets.pop(bullets.index(bullet))
+        return 1
+    elif bullet.x > 640 or bullet.x < 0:
+        bullets.pop(bullets.index(bullet))
+    return 0
+
+
 class Projectile(object):
 
     def __init__(self, x, y, image, direction, bullets):
@@ -16,8 +25,8 @@ class Projectile(object):
     def draw(self, screen):
         screen.blit(self.image, (self.x, self.y))
         self.hit_box = (self.x + 5, self.y + 13, 40, 27)
-        #pygame.draw.rect(screen, (255, 0, 0), self.hit_box, 1)
         self.x += self.vel * self.direction
+        #pygame.draw.rect(screen, (255, 0, 0), self.hit_box, 1)
 
     def within_hitbox(self, spawn_list, dror_char, t_spawn_created_list):
         for child in spawn_list:

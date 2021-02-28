@@ -1,6 +1,15 @@
 import pygame
 
 
+def coins_listener(coins_list, screen, dror_char):
+    for coin in coins_list:
+        coin.draw(screen)
+        if coin.within_hitbox(dror_char) is True:
+            coin.destroy()
+            return 1
+    return 0
+
+
 class Coin:
     def __init__(self, x, y, lst):
         self.coin_sound = pygame.mixer.Sound('sounds/coin_sound.wav')

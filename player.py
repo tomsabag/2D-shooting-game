@@ -1,8 +1,12 @@
+import time
 import pygame
+
+from Projectile import Projectile
 
 
 class Player(object):
     def __init__(self, start_x=50, start_y=215, width=50, height=50):
+        self.is_shooting = False
         self.hp = 100
         self.hp_printed_text = pygame.font.SysFont(None, 17).render(str(self.adjust_hp()) + '/100', True, (0, 0, 0), None)
         self.is_hit = 0
@@ -20,8 +24,8 @@ class Player(object):
         self.image = pygame.image.load('images/faces/drori_right.png')
         self.hit_box = (self.start_x - 2, self.start_y, self.width + 5, self.height + 13)
 
-    def draw(self, screen, is_shooting):
-        if not is_shooting:
+    def draw(self, screen):
+        if not self.is_shooting:
             if self.left is True:
                 self.image = pygame.image.load('images/faces/drori_left.png')
             elif self.right is True:
@@ -66,3 +70,28 @@ class Player(object):
 
     def adjust_hp(self):
         return max(0, min(self.hp, 100))
+
+    def shoot(self, spawn_list, bullets, shot):
+        self.is_shooting = True
+        shot.play()
+        if self.right is True:
+            self.image = pygame.image.load('images/faces/drori_shoot_right.png')
+        elif self.left is True:
+            self.image = pygame.image.load('images/faces/drori_shoot_left.png')
+
+        if self.left is True:
+            direction = -1
+            bullet_image = 'images/bullets/defaultbulletl.png'
+
+        else:
+            direction = 1
+            bullet_image = 'images/bullets/defaultbullet.png'
+
+        for child in spawn_list:
+            if self.start_y + self.height > child.hit_box[1] and \
+                    self.start_y < child.hit_box[1] + child.hit_box[2]:
+                bullet_image = child.bullet
+
+        bullets.append(Projectile(self.start_x + (self.width // 2), self.start_y
+                                  + (self.height // 2), bullet_image, direction, bullets))
+

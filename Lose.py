@@ -20,3 +20,10 @@ class Lose:
         self.lose_sound.play()
         self.lose_interval_list.append(time.perf_counter())
         self.play = True
+
+    def activate(self, screen):
+        if self.play is False:
+            self.sound_play()
+        self.lose = True
+        self.draw(screen)
+
