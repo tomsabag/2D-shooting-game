@@ -226,6 +226,8 @@ while run:
             child.draw(screen, child.shoes_counter, child)
         else:
             spawn_list.pop(spawn_list.index(child))
+            if child.die_sound == konichiwa:
+                maors_girl_object.sound_played = False
 
     # ///////////////////////////////////////// shooting /////////////////////////////////////////////////////////////
 
