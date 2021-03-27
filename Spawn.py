@@ -3,8 +3,12 @@ import time
 
 score_counter = 0
 displayed_score_counter = 0
+
+
 class Spawn(object):
-    def __init__(self, x, y, image, image2, vel, die_sound, bullet, t_created, shoot_interval, t_spawn_created_list, displayed_score_counter):
+    def __init__(self, x, y, image, image2, vel, die_sound, bullet, t_created, shoot_interval, t_spawn_created_list, displayed_score_counter, hearts_counter):
+        self.heart_index = hearts_counter
+        self.heart_sound_played = False
         self.shoes_list = [pygame.image.load(f"shoes/{i}.gif") for i in range(60)]
         self.shoes_counter = 0
         self.image = pygame.image.load(image)
@@ -59,3 +63,18 @@ class Spawn(object):
         else:
             self.jump = False
             self.jump_count = 10
+
+    def shooting_heart(self, child, screen, heart, heart_ys, hearted_maor, maor_heart_sound):
+        child_width = 56
+        child_height = 60
+        heart_width = 50
+        heart_height = 37
+        #pygame.draw.line(screen, (255, 0, 0), (475 + (heart_width // 2), 400 + (heart_height // 2)),
+                         #(child.x + (child_width // 2), child.y + (child_height // 2)), 1)
+        if heart_ys[self.heart_index] > self.y + 10:
+            screen.blit(heart, (min(child.x, (475 + (heart_width // 2))), heart_ys[self.heart_index]))
+        else:
+            self.image = hearted_maor
+            if not self.heart_sound_played:
+                maor_heart_sound.play()
+                self.heart_sound_played = True

@@ -1,3 +1,4 @@
+import pygame
 class CheeringObject:
     def __init__(self, x, y, image, sound):
         self.x = x
@@ -11,3 +12,5 @@ class CheeringObject:
         if self.sound_played is False:
             self.sound_played = True
             self.sound.play()
+
+

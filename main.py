@@ -68,9 +68,11 @@ coin_image = pygame.image.load('images/others/coin.png')
 sneeze_image = pygame.image.load('images/others/sneeze.png')
 corona_image = pygame.image.load('images/bullets/corona.png')
 score = pygame.image.load('images/others/score.png')
-
+heart = pygame.image.load('images/others/heart.png')
+hearted_maor = pygame.image.load('images/faces/hearted_maor.png')
 
 # /////////////////////////////////////// music settings ////////////////////////////////////////////
+maor_heart_sound = pygame.mixer.Sound('sounds/maor_heart_sound.wav')
 lvl_up_sound = pygame.mixer.Sound('sounds/lvlup.wav')
 lose_sound = pygame.mixer.Sound('sounds/lose_sound.wav')
 gong = pygame.mixer.Sound('sounds/gong.wav')
@@ -90,13 +92,13 @@ pygame.mixer_music.play(-1)
 
 # //////////////////////////////////////////////// create objects //////////////////////////////////////
 maor = Spawn(590, 300, 'images/faces/maor.png', 'images/faces/maor2.png', 5, konichiwa, 'images/bullets/asian.png',
-             time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+             time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter, -1)
 ido = Spawn(590, 300, 'images/faces/ido.png', 'images/faces/ido2.png', 5, ploo, 'images/bullets/shnitzel.png',
-            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter, -1)
 tom = Spawn(590, 300, 'images/faces/tom.png', 'images/faces/tom2.png', 5, bruh, 'images/bullets/chains.png',
-            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter, -1)
 bar = Spawn(590, 300, 'images/faces/bar.png', 'images/faces/bar2.png', 5, brk, 'images/bullets/penisr.png',
-            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter)
+            time.perf_counter(), random.randint(2, 7), t_spawn_created_list, displayed_score_counter, -1)
 maors_girl_object = CheeringObject(500, 400, maors_girl, laugh)
 lose_button = Lose()
 dror_char = player.Player()
@@ -106,6 +108,10 @@ childs_list = [[maor, 'images/bullets/asian.png', konichiwa, 'images/faces/maor.
                [ido, 'images/bullets/shnitzel.png', ploo, 'images/faces/ido.png', 'images/faces/ido2.png'],
                [tom, 'images/bullets/chains.png', bruh, 'images/faces/tom.png', 'images/faces/tom2.png'],
                [bar, 'images/bullets/penisr.png', brk, 'images/faces/bar.png', 'images/faces/bar2.png']]
+
+heart_ys = []
+hearts_counter = 0
+
 
 def redraw_game(dror_char, bullets, coin_image):
     coins_text = font.render(str(coins_counter), True, black, None)
@@ -194,7 +200,9 @@ while run:
                                     childs_list[random_child_n][4], 5,
                                     childs_list[random_child_n][2], childs_list[random_child_n][1],
                                     game_time, enemy_time_counter + random.randint(2, 8), t_spawn_created_list,
-                                    displayed_score_counter))
+                                    displayed_score_counter, hearts_counter))
+            hearts_counter += 1
+            heart_ys.append(400 + 18)
     # /////////////////////////////////////// enemy bullets   ////////////////////////////////////////////////////
     for enemy_bullet in enemy_bullets:
         enemy_bullet.dror_in_range(dror_char, enemy_bullets)
@@ -203,6 +211,7 @@ while run:
         else:
             enemy_bullet.draw(screen)
     # ////////////////////////////////////// child's shoes animation /////////////////////////////////////////
+    #maors_girl_object.draw(screen)
     for child in spawn_list:
         child.shoes_counter += 4
         if child.shoes_counter == 56:
@@ -213,6 +222,8 @@ while run:
             jump_counter_random += random.randint(5, 5)
         if child.die_sound == konichiwa:
             maors_girl_object.draw(screen)
+            child.shooting_heart(child, screen, heart, heart_ys, hearted_maor, maor_heart_sound)
+            heart_ys[child.heart_index] -= 12
         if enemy_time_counter > child.shoot_interval:
             enemy_shot.play()
             enemy_bullets.append(Projectile(child.x - 30, child.y - 10, 'images/bullets/enemy_bullet.png', -1, bullets))
